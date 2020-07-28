@@ -10,8 +10,7 @@ def drawWindow(win,player,map,FOV):
     pygame.display.update()
 
 def main():
-    width = 1000
-    height = 1000
+
     win = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Player")
     run=True
