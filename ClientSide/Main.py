@@ -1,7 +1,7 @@
 import pygame
 from Player.PlayerObj import *
 from MapObj.map import *
-#TODO:move to some other File
+
 
 def drawWindow(win,player,map,FOV):
     win.fill((155,155,155))
@@ -22,6 +22,7 @@ def main():
     player= PlayerObj(50,50,getWid(),getHeight(),getColor(),obsInfo)
     print(player.obsInfo)
     print (player.obsX)
+    player.getMessage()
     while(run):
         clock.tick(60)
         frame=clock.get_fps()
