@@ -35,5 +35,5 @@ def main():
                 pygame.quit()
         player.move()
         drawWindow(win,player,map,initFov)
-        counter+=1;
+        counter+=1
 main()
