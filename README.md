@@ -2,6 +2,7 @@
 
   * This is our first project in COMP3010
   * Project Member: Tianlei Wang and Chenbo Ma
+  * This project is a two man tag game which works under localhost
   
 # How to run the project:
   * First, run the server under serverSdie.
