@@ -6,21 +6,24 @@ import pygame
 
 
 class PlayerObj:
-    def __init__(self, x, y, width, height, color, obsInfo):
-        self.x = x
-        self.y = y
+    def __init__(self,width, height, color, obsInfo):
+        self.communicator = communication_client()
+
         self.width = width
         self.height = height
         self.color = color
-        self.rect = (x, y, width, height)
+        self.getPos()
+        self.rect = (self.x, self.y, width, height)
         self.obsInfo = obsInfo
-        self.communicator = communication_client()
+
         self.__parseObs()
 
     # get player position in a String
     def getPos(self):
-        ret = self.x + ":" + self.y
-        return ret
+        getX = self.communicator.getPos()
+        self.x = int(getX.split("&")[0].split("=")[1])
+        self.y = int(getX.split("&")[1].split("=")[1])
+        return
 
     def moveable(self, x, y):
         ret = True
@@ -101,16 +104,17 @@ class PlayerObj:
         # send message to server
         # a string have current position of the player
         ret = "posX=" + str(self.x) + "&posY=" + str(self.y)
-        #self.communicator.send(ret)
+        self.communicator.send(ret)
         return ret
 
     def getMessage(self):
         # recieve message from server
-        # str=self.communicator.receive()
-        # self.opp_x=str.split("&")[0].split("=")[1]
-        # self.opp_y=str.split("&")[1].split("=")[1]
+        str=self.communicator.receive()
+        if(str != ""):
+            self.opp_x=int(str.split("&")[0].split("=")[1])
+            self.opp_y=int(str.split("&")[1].split("=")[1])
 
         # this is stub
-        self.opp_x = 500
-        self.opp_y = 500
+        # self.opp_x = 500
+        # self.opp_y = 500
         return
