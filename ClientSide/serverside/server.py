@@ -2,6 +2,7 @@ from _thread import *
 import socket
 import sys
 
+lamport_counter=0
 host = ""
 port=10086
 playerInfo = {}
@@ -38,10 +39,11 @@ def read_pos(player,list,data):
             (key,value) = info.split('=')
             list['player2'][key]=value
 
-def threaded_client(conn,player):
+def threaded_client(conn,player,lamportCounter):
     #First of first, we need to send initial position to current player
     #conn.sendall(str.encdoe("Player"+str(player)+"is connected"))
     conn.send(str.encode(make_pos(player,playerInfo)))
+    lamportCounter+=1
     reply = ""
     while True:
         try:
@@ -51,24 +53,27 @@ def threaded_client(conn,player):
                 oppositePos = ""
                 if player == 0:
                     oppositePos = make_pos(1, playerInfo)
+                    lamportCounter = max(lamportCounter,int(playerInfo['player2']['Counter']))
+                    lamportCounter+=1
+                    print(lamportCounter)
                 elif player == 1:
                     oppositePos = make_pos(0, playerInfo)
-                print(oppositePos)
+                    lamportCounter = max(lamportCounter, int(playerInfo['player1']['Counter']))
+                    lamportCounter += 1
                 conn.sendall(str.encode(oppositePos))
             else:
                 # Server do not need to respond any information, just update current player's position
                 read_pos(player, playerInfo, data)
+                lamportCounter+=1
+
         except:
             break
-    player -=1
     conn.close()
     print("Disconnected")
 initialList(playerInfo)
-print(len(playerInfo))
 while True:
     conn, addr=serversocket.accept()
     print("Now connected to this address", addr)
-    start_new_thread(threaded_client,(conn,currentPlayer))
-    print("This is player"+str(currentPlayer))
+    start_new_thread(threaded_client,(conn,currentPlayer,lamport_counter))
     currentPlayer +=1
 
