@@ -1,8 +1,8 @@
 import random
-pVel=5
+pVel=20
 pWid=25
 pHeight=25
-FOV=150
+FOV=300
 def getVel():
     return pVel
 def getWid():
