@@ -1,5 +1,6 @@
 from _thread import *
 import socket
+import status
 import sys
 import pickle
 host = "LOCALHOST"
