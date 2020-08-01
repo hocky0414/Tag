@@ -6,9 +6,10 @@ import pygame
 
 
 class PlayerObj:
-    def __init__(self,width, height, color, obsInfo):
+    def __init__(self,x,y,width, height, color,obsInfo):
         self.communicator = communication_client()
-
+        self.x = x
+        self.y = y
         self.width = width
         self.height = height
         self.color = color
@@ -19,11 +20,11 @@ class PlayerObj:
         self.__parseObs()
 
     # get player position in a String
-    def getPos(self):
-        getX = self.communicator.getPos()
-        self.x = int(getX.split("&")[0].split("=")[1])
-        self.y = int(getX.split("&")[1].split("=")[1])
-        return
+    # def getPos(self):
+    #     getX = self.communicator.getPos()
+    #     self.x = int(getX.split("&")[0].split("=")[1])
+    #     self.y = int(getX.split("&")[1].split("=")[1])
+    #     return
 
     def moveable(self, x, y):
         ret = True

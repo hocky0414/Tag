@@ -1,4 +1,5 @@
 from _thread import *
+from Player import PlayerObj
 import socket
 import sys
 import pickle
@@ -11,40 +12,40 @@ serversocket.listen(2)
 currentPlayer = 0
 print("Server is started, waitting for hearing from clients:")
 def initialList(list):
-    list['player1'] = {}
-    list['player2'] = {}
-    list['player1']['posX'] = 10
-    list['player1']['posY'] = 10
-    list['player1']['Counter'] = 0
-    list['player2']['posX'] = 500
-    list['player2']['posY'] = 500
-    list['player2']['Counter']=0
+    list['cap'] = {}
+    list['thief'] = {}
+    list['cap']['posX'] = 10
+    list['cap']['posY'] = 10
+    list['cap']['Counter'] = 0
+    list['thief']['posX'] = 500
+    list['thief']['posY'] = 500
+    list['thief']['Counter']=0
 def make_pos(player,list):
     #the position need to send to opposite player
     strings = ""
     if player == 0:
-        strings = "posX="+str(list['player1']['posX'])+"&posY="+str(list['player1']['posY'])+"&Counter="+str(list['player1']['Counter'])
+        strings = "posX="+str(list['cap']['posX'])+"&posY="+str(list['cap']['posY'])+"&Counter="+str(list['cap']['Counter'])
     elif player == 1:
-        strings = "posX="+str(list['player2']['posX'])+"&posY="+str(list['player2']['posY'])+"&Counter="+str(list['player2']['Counter'])
+        strings = "posX="+str(list['thief']['posX'])+"&posY="+str(list['thief']['posY'])+"&Counter="+str(list['thief']['Counter'])
     return strings
 def read_pos(player,data):
     #this is update player's position on server
     if player == 0:
         for info in data.split('&'):
             (key,value) = info.split('=')
-            playerInfo['player1'][key]=value
+            playerInfo['cap'][key]=value
     elif player == 1:
         for info in data.split('&'):
             (key,value) = info.split('=')
-            playerInfo['player2'][key]=value
+            playerInfo['thief'][key]=value
 
     return
 def threaded_client(conn,player):
     #First of first, we need to send initial position to current player
     #conn.sendall(str.encdoe("Player"+str(player)+"is connected"))
     conn.send(pickle.dumps(make_pos(player,playerInfo)))
-    reply = ""
-    while True:
+    caught = False
+    while not caught:
         try:
             data = conn.recv(2048).decode('utf-8')
             if 'GET' in data:
