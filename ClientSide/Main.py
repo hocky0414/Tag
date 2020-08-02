@@ -1,4 +1,5 @@
-from Player.PlayerObj import *
+from Static.PlayerStatic import getFOV
+from Static.mainStatic import *
 from MapObj.map import *
 import Communication.Client as com
 

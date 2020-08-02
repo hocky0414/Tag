@@ -1,5 +1,5 @@
 import pygame
-import mainStatic
+from Static import mainStatic
 
 resolution_width = mainStatic.getResolution_width()
 resolution_height = mainStatic.getResolution_height()
