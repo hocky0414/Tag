@@ -7,7 +7,7 @@ def main():
         lob = Lobby.lobby()
 
         pygame.display.set_caption("Lobby")
-        font = pygame.font.Font('freesansbold.ttf', 30)
+        font = pygame.font.Font('freesansbold.ttf', 70)
 
         while True:
             for event in pygame.event.get():
