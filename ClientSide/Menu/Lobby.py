@@ -1,8 +1,8 @@
 import pygame
 import mainStatic
 
-resolution_width =mainStatic.getResolution_width()
-resolution_height =mainStatic.getResolution_height()
+resolution_width = mainStatic.getResolution_width()
+resolution_height = mainStatic.getResolution_height()
 black = (0, 0, 0)
 green=(0,255,0)
 red= (255,0,0)
@@ -16,7 +16,7 @@ class lobby:
         pygame.draw.line(win, black, (0, resolution_height / 5), (resolution_width, resolution_height / 5), 10)
         pygame.draw.line(win, black, (resolution_width / 2, resolution_height / 5),
                          (resolution_width / 2, resolution_height / 5 * 4), 10)
-        pygame.draw.line(win, black, (0, resolution_height / 5 * 4), (resolution_width, resolution_width / 5 * 4), 10)
+        pygame.draw.line(win, black, (0, resolution_height / 5 * 4), (resolution_width, resolution_height / 5 * 4), 10)
         #From Geeksforgeeks
         myfont = pygame.font.Font('freesansbold.ttf', 30)
         textd = myfont.render("Waiting for Player...", 1, black)
