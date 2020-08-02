@@ -28,7 +28,14 @@ class communication_client:
         elif thief:
             message = "character=thief&ready="+str(ready)
         self.Socket.sendall(pickle.dumps(message))
-        data =pickle.loads(self.Socket.recv(2048))
+        data = pickle.loads(self.Socket.recv(2048))
         if data:
-            self.player = data
+            return data
+        return
+    def initPlayer(self):
+        self.Socket.sendall(pickle.dumps("init"))
+        data = pickle.loads(self.Socket.recv(2048))
+        print(data)
+        if data:
+            self.player=data
         return

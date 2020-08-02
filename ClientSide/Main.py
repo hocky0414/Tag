@@ -32,18 +32,18 @@ def main():
     win = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Tag")
     run = True
+    init=False
     initFov = getFOV()
     clock = pygame.time.Clock()
     counter = 0
     comm = com.communication_client()
     status = comm.status()
-    player = comm.player
-    waiting = Lobby.lobby()
+    player=None
+    waiting = Lobby.lobby(comm)
     font = pygame.font.Font('freesansbold.ttf', 70)
 
     while (run):
         if status.value == Status.waiting.value:
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
@@ -53,6 +53,12 @@ def main():
                     waiting.chooseC()
             drawMenu(win, waiting, font)
         elif status.value ==Status.in_game.value:
+
+            if not init:
+                comm.initPlayer()
+                player = comm.player
+                init=True
+
             player2 = comm.send(player)
             clock.tick(60)
             frame = clock.get_fps()
@@ -66,6 +72,5 @@ def main():
             player.move()
             drawWindow(win, player, player.map, initFov, player2.x, player2.y, player2.color)
             counter += 1
-        status= comm.status()
-
+        status = comm.status()
 main()

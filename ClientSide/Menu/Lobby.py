@@ -71,11 +71,18 @@ class lobby:
             if (x >= self.readyB_left and x <= self.readyB_right and y >= self.readyB_top and y <= self.readyB_bottom):
                 if (not self.ready):
                     if (self.thief or self.cap):
-                        self.ready = True
-                        self.com.sendMenu(self.cap,self.thief,self.ready)
+
+                        data=self.com.sendMenu(self.cap,self.thief,True)
+                        print (data)
+                        if "taken" not in data:
+                            self.ready = True
+                        else:
+                            self.ready= False
                 else:
                     self.ready = False
-                    self.com.sendMenu(self.cap, self.thief, self.ready)
+                    data=self.com.sendMenu(self.cap, self.thief, self.ready)
+                    if "taken" in data:
+                        self.ready = True
         return
     def chooseC(self):
         if self.init:
@@ -93,9 +100,3 @@ class lobby:
                 else:
                     self.thief = False
         return
-    def getCaps(self):
-        return self.cap
-    def getReadys(self):
-        return self.ready
-    def getThief(self):
-        return self.thief

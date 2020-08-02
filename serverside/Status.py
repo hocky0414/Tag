@@ -6,14 +6,16 @@ class Status(Enum):
     in_game = 2
     game_over = 3
 
-
-current = Status.waiting
-
-
-def getStates():
-    return current
+class gameStatus:
+    def __init__(self):
+        self.current = Status.waiting
 
 
-def setStates(state):
-    current = state
-    return current
+    def getStates(self):
+        return self.current
+
+
+    def setIngame(self):
+        self.current = Status.in_game
+    def setWaiting(self):
+        self.current = Status.waiting
