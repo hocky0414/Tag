@@ -1,4 +1,5 @@
 import pygame
+import Communication.Client as com
 from Static import mainStatic
 
 resolution_width = mainStatic.getResolution_width()
@@ -8,6 +9,7 @@ green=(0,255,0)
 red= (255,0,0)
 class lobby:
     def __init__(self):
+        self.com = com.communication_client()
         self.ready=False
         self.cap = False
         self.thief = False
@@ -38,10 +40,8 @@ class lobby:
         elif self.ready and self.thief:
             text = font.render('Cancel', True, black, red)
             textd = myfont.render("Thief is ready to go", 1, black)
-        if self.ready:
-            print(self.ready)
         readyB = text.get_rect()
-        readyB.center = (resolution_width / 2, resolution_height * 6 / 7)
+        readyB.center = (500,500)#(resolution_width / 2, resolution_height * 6 / 7)
         capB = textcap.get_rect()
         capB.center = (resolution_width / 4, resolution_height/10)
         thiefB = textthe.get_rect()
@@ -72,8 +72,10 @@ class lobby:
                 if (not self.ready):
                     if (self.thief or self.cap):
                         self.ready = True
+                        self.com.sendMenu(self.cap,self.thief,self.ready)
                 else:
                     self.ready = False
+                    self.com.sendMenu(self.cap, self.thief, self.ready)
         return
     def chooseC(self):
         if self.init:
@@ -91,3 +93,9 @@ class lobby:
                 else:
                     self.thief = False
         return
+    def getCaps(self):
+        return self.cap
+    def getReadys(self):
+        return self.ready
+    def getThief(self):
+        return self.thief
