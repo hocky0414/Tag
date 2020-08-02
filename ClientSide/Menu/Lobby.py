@@ -8,12 +8,12 @@ black = (0, 0, 0)
 green=(0,255,0)
 red= (255,0,0)
 class lobby:
-    def __init__(self):
-        self.com = com.communication_client()
+    def __init__(self,comm):
         self.ready=False
         self.cap = False
         self.thief = False
         self.init =False
+        self.com = comm
     def draw(self, win,font):
         pygame.draw.line(win, black, (0, resolution_height / 5), (resolution_width, resolution_height / 5), 10)
         pygame.draw.line(win, black, (resolution_width / 2, resolution_height / 5),
