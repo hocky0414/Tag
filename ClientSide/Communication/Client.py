@@ -10,29 +10,9 @@ class communication_client:
         self.port=10086
         self.Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.Socket.connect(('LOCALHOST', self.port))
-        self.pos= pickle.loads(self.Socket.recv(2048))
-    def send(self,string):
-
-        string+="&Counter="+str(self.lamport.getCounter())
-        self.Socket.sendall(string.encode())
+        self.player= pickle.loads(self.Socket.recv(2048))
+    def send(self,player):
+        self.Socket.sendall(pickle.dumps(player))
         self.lamport.incrementCounter()
-        print("Sent:"+string)
-
-        return
-    def receive(self):
-        try:
-            sendMessage="GET"
-            self.Socket.sendall(sendMessage.encode())
-
-            data=self.Socket.recv(2048).decode("utf-8")
-            counter=int(data.split("&")[2].split("=")[1])
-            maxValue= max(self.lamport.getCounter(),counter)
-            self.lamport.setCounter(maxValue)
-            self.lamport.incrementCounter()
-            return data
-        except socket.error as e:
-            print(e)
-            return ""
-    def getPos(self):
-        return str(self.pos)
+        return pickle.loads(self.Socket.recv(2048))
 
