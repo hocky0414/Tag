@@ -2,6 +2,7 @@ from _thread import *
 import Player.PlayerObj as player
 import PlayerStatic
 import MapObj.map as Map
+import Status
 import socket
 
 import pickle
@@ -29,7 +30,7 @@ def make_pos(player):
 def threaded_client(conn,player):
     #First of first, we need to send initial position to current player
     #conn.sendall(str.encdoe("Player"+str(player)+"is connected"))
-    conn.send(pickle.dumps(make_pos(player)))
+
     caught = False
     while not caught:
         try:
@@ -44,8 +45,29 @@ def threaded_client(conn,player):
                 elif player == 1:
                     oppositePos = make_pos(0)
 
-                print(oppositePos.x)
                 conn.sendall(pickle.dumps(oppositePos))
+            elif type(data)==type(""):
+                if "status" in data:
+                    conn.sendall(pickle.dumps(Status.getStates()))
+                elif "&" in data:
+                    temp={}
+                    for ele in data.split("&"):
+                        (k,v) = ele.split("=")
+                        temp[k]=v
+                    if "true" in temp['Ready'] :
+                        info= temp['character']
+                        readyPlayer[player]=True
+                        counter=0
+                        for ready in readyPlayer:
+                            if ready:
+                                counter+=1
+                        if counter ==maxPlayer: # all set start the game
+                            if 'thief' in info:
+                                conn.send(pickle.dumps(make_pos(1)))
+                            elif 'cap' in info:
+                                conn.send(pickle.dumps(make_pos(0)))
+                    elif "false" in temp['ready']:
+                        readyPlayer[player]=False
 
         except:
             break
@@ -58,7 +80,10 @@ port=10086
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 serversocket.bind((host,port))
 serversocket.listen(2)
+maxPlayer=2
 currentPlayer = 0
+
+readyPlayer= [False,False]
 playerInfo = {}
 initialList(playerInfo)
 map = Map.Map(1000, 1000)

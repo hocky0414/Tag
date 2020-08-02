@@ -15,4 +15,7 @@ class communication_client:
         self.Socket.sendall(pickle.dumps(player))
         self.lamport.incrementCounter()
         return pickle.loads(self.Socket.recv(2048))
-
+    def status(self):
+        self.Socket.sendall(pickle.dumps("status"))
+        self.lamport.incrementCounter()
+        return pickle.loads(self.Socket.recv(2048))
