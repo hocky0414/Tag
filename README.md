@@ -1,4 +1,4 @@
-This project is a two man tag game which works under localhost
+This project is a two men tag game which works under localhost
 # Tag
 
   * This is our first project in COMP3010
