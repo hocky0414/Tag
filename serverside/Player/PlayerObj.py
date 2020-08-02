@@ -1,12 +1,13 @@
 from PlayerStatic import *
-from mainStatic import *
+from Static.mainStatic import *
+import Player.PlayerObjInterface as interface
 import math
 import pygame
 
 
-class PlayerObj:
-    def __init__(self,x,y,width, height, color,obsInfo,map):
-
+class PlayerObj(interface.playerInterface):
+    def __init__(self, x, y, width, height, color, obsInfo, map):
+        super().__init__(x, y, width, height, color, obsInfo, map)
         self.x = x
         self.y = y
         self.width = width

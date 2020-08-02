@@ -18,8 +18,6 @@ def initialList(list):
     list['thief']['Counter']=0
     return
 
-
-
 def make_pos(player):
     #the position need to send to opposite player
 

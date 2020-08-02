@@ -1,8 +1,8 @@
 import pygame
-import mainStatic
+from Static import mainStatic
 
-resolution_width =mainStatic.getResolution_width()
-resolution_height =mainStatic.getResolution_height()
+resolution_width = mainStatic.getResolution_width()
+resolution_height = mainStatic.getResolution_height()
 black = (0, 0, 0)
 green=(0,255,0)
 red= (255,0,0)
