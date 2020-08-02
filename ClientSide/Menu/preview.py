@@ -7,7 +7,7 @@ def main():
         lob = Lobby.lobby()
 
         pygame.display.set_caption("Lobby")
-        font = pygame.font.Font('freesansbold.ttf', 70)
+        font = pygame.font.Font('freesansbold.ttf', 30)
 
         while True:
             for event in pygame.event.get():
@@ -15,6 +15,7 @@ def main():
                     pygame.quit()
                 if event.type ==pygame.MOUSEBUTTONDOWN:
                     lob.changeReady()
+                    lob.chooseC()
             win.fill((255, 255, 255))
             lob.draw(win,font)
             pygame.display.update()

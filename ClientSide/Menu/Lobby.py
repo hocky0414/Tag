@@ -1,8 +1,8 @@
 import pygame
 import mainStatic
 
-resolution_width = mainStatic.getResolution_width()
-resolution_height = mainStatic.getResolution_height()
+resolution_width =mainStatic.getResolution_width()
+resolution_height =mainStatic.getResolution_height()
 black = (0, 0, 0)
 green=(0,255,0)
 red= (255,0,0)
@@ -17,22 +17,27 @@ class lobby:
         pygame.draw.line(win, black, (resolution_width / 2, resolution_height / 5),
                          (resolution_width / 2, resolution_height / 5 * 4), 10)
         pygame.draw.line(win, black, (0, resolution_height / 5 * 4), (resolution_width, resolution_width / 5 * 4), 10)
-
-        #pygame.draw.rect(win,green,(resolution_width / 2-resolution_width/10,resolution_height / 5 * 4*1.1,resolution_width/5,resolution_height/10))
         #From Geeksforgeeks
         if not self.ready:
-            text = font.render('Ready', True, black, green)
+            text = font.render('Ready', True,black, green)
         else:
             text = font.render('Cancel', True, black, red)
         if not self.cap:
             textcap = font.render('Police', True, black, green)
         else:
             textcap = font.render('Police', True, black, red)
+        if not self.thief:
+            textthe = font.render('Thief', True, black, green)
+        else:
+            textthe = font.render('Thief', True, black, red)
+        textd = font.render("Waiting for Player...", 1,black)
+        win.blit(textd, (25, 25))
         readyB = text.get_rect()
         readyB.center = (resolution_width / 2, resolution_height * 6 / 7)
-        capB = text.get_rect()
+        capB = textcap.get_rect()
         capB.center = (resolution_width / 4, resolution_height/10)
-        print("This is capB.center"+str(capB.center))
+        thiefB = textthe.get_rect()
+        thiefB.center = (resolution_width*3 / 4, resolution_height / 10)
         if not self.init:
             self.readyB_left=readyB.left
             self.readyB_right = readyB.right
@@ -42,11 +47,14 @@ class lobby:
             self.capB_right = capB.right
             self.capB_bottom = capB.bottom
             self.capB_top = capB.top
+            self.thiefB_left = thiefB.left
+            self.thiefB_right = thiefB.right
+            self.thiefB_bottom = thiefB.bottom
+            self.thiefB_top = thiefB.top
             self.init=True
         win.blit(text, readyB)
         win.blit(textcap,capB)
-        print("This is readyB"+str(readyB))
-        print("This is capB"+str(capB))
+        win.blit(textthe,thiefB)
         return
     def changeReady(self):
         if self.init:
@@ -56,11 +64,18 @@ class lobby:
                     self.ready = True
                 else:
                     self.ready = False
+        return
+    def chooseC(self):
+        if self.init:
+            (x, y) = pygame.mouse.get_pos()
             if (x >= self.capB_left and x <= self.capB_right and y >= self.capB_top and y <= self.capB_bottom):
                 if (not self.cap):
                     self.cap = True
                 else:
                     self.cap = False
-        return
-    def chooseC(self):
+            if (x >= self.thiefB_left and x <= self.thiefB_right and y >= self.thiefB_top and y <= self.thiefB_bottom):
+                if (not self.thief):
+                    self.thief = True
+                else:
+                    self.thief = False
         return
