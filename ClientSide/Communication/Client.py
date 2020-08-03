@@ -10,7 +10,7 @@ class communication_client:
         self.lamport= lamportTime()
         self.port=10086
         self.Socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.Socket.connect(('LOCALHOST', self.port))
+        self.Socket.connect(('10.0.0.220', self.port))
         self.player= None
     def send(self,player):
         self.Socket.sendall(pickle.dumps(player))

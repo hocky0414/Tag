@@ -4,7 +4,7 @@ class lamportTime:
     def getCounter(self):
         return self.lamport_counter
     def incrementCounter(self):
-        self.lamport_counter+=1;
+        self.lamport_counter+=1
         return
     def setCounter(self,value):
         self.lamport_counter=value

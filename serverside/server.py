@@ -84,7 +84,7 @@ def threaded_client(conn,player):
     player -=1
     conn.close()
     print("Disconnected")
-host = "LOCALHOST"
+host = '10.0.0.220'
 port=10086
 
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
