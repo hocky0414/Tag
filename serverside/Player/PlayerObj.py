@@ -1,5 +1,5 @@
 from PlayerStatic import *
-from Static.mainStatic import *
+from Player.mainStatic import *
 import Player.PlayerObjInterface as interface
 import math
 import pygame
