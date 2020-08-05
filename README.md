@@ -9,6 +9,6 @@ This project is a two men tag game which works under localhost
 
   
 # How to run the project:
-  * First, run the server under serverSdie.
-  * Next run main and stubmain under clientside on the same machine.
+  * First, run the server under serverSdie(commandline: python3 server.py).
+  * Next run main and stubmain under clientside on the same machine(commandline: python3 main.py).
   * Play around with it
