@@ -22,14 +22,15 @@ class lobby:
         #From Geeksforgeeks
         myfont = pygame.font.Font('freesansbold.ttf', 30)
         textd = myfont.render("Waiting for Player...", 1, black)
-        if not self.cap:
+        if not self.cap and not self.thief:
             textcap = font.render('Police', True, black, green)
-        else:
-            textcap = font.render('Police', True, black, red)
-            textd = myfont.render("You choosed Police", 1, black)
-        if not self.thief:
             textthe = font.render('Thief', True, black, green)
-        else:
+        elif self.cap:
+            textcap = font.render('Police', True, black, red)
+            textthe = font.render('Thief', True, black, (88,88,88))
+            textd = myfont.render("You choosed Police", 1, black)
+        elif self.thief:
+            textcap = font.render('Police', True, black, (88,88,88))
             textthe = font.render('Thief', True, black, red)
             textd = myfont.render("You choosed Thief", 1, black)
         if not self.ready:
@@ -91,12 +92,12 @@ class lobby:
                 if (not self.cap):
                     if(not self.thief):
                         self.cap = True
-                else:
+                elif not self.ready:
                     self.cap = False
             if (x >= self.thiefB_left and x <= self.thiefB_right and y >= self.thiefB_top and y <= self.thiefB_bottom):
                 if (not self.thief):
                     if(not self.cap):
                         self.thief = True
-                else:
+                elif not self.ready:
                     self.thief = False
         return

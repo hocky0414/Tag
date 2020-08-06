@@ -78,7 +78,6 @@ def threaded_client(conn,player):
                     break
             if start:
                 status.setIngame()
-            print(temp)
         except:
             break
     player -=1
