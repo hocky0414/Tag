@@ -1,4 +1,4 @@
-This project is a two men tag game which works under localhost
+This project is a two men tag game which works under localhost/LAN
 # Prepare:
   * Python3 is required
   * First, you need to install pip3 on your machine. If you do not have pip3 yet, follow the [tutorial](https://evansdianga.com/install-pip-osx/)
