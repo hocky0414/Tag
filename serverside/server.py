@@ -28,8 +28,6 @@ def make_pos(player):
         return players[1]
 
 def threaded_client(conn,player):
-    #First of first, we need to send initial position to current player
-    #conn.sendall(str.encdoe("Player"+str(player)+"is connected"))
     recordTime = True
     gamelength = 3
     caught = False
