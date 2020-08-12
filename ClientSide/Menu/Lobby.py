@@ -13,36 +13,40 @@ class lobby:
         self.cap = False
         self.thief = False
         self.init =False
+        self.textd = ""
         self.com = comm
     def draw(self, win,font):
         pygame.draw.line(win, black, (0, resolution_height / 5), (resolution_width, resolution_height / 5), 10)
-        pygame.draw.line(win, black, (resolution_width / 2, resolution_height / 5),
-                         (resolution_width / 2, resolution_height / 5 * 4), 10)
+        # pygame.draw.line(win, black, (resolution_width / 2, resolution_height / 5),
+        #                  (resolution_width / 2, resolution_height / 5 * 4), 10)
         pygame.draw.line(win, black, (0, resolution_height / 5 * 4), (resolution_width, resolution_height / 5 * 4), 10)
         #From Geeksforgeeks
         myfont = pygame.font.Font('freesansbold.ttf', 30)
-        textd = myfont.render("Waiting for Player...", 1, black)
+        self.textd = myfont.render("Waiting for Player...", 1, black)
+        textinfo = myfont.render("", 1, black)
         if not self.cap and not self.thief:
             textcap = font.render('Police', True, black, green)
             textthe = font.render('Thief', True, black, green)
         elif self.cap:
             textcap = font.render('Police', True, black, red)
             textthe = font.render('Thief', True, black, (88,88,88))
-            textd = myfont.render("You choosed Police", 1, black)
+            self.textd = myfont.render("You choosed Police", 1, black)
+            textinfo = myfont.render("You cannot enter game if opponent is ready as Police", 1, black)
         elif self.thief:
             textcap = font.render('Police', True, black, (88,88,88))
             textthe = font.render('Thief', True, black, red)
-            textd = myfont.render("You choosed Thief", 1, black)
+            self.textd = myfont.render("You choosed Thief", 1, black)
+            textinfo = myfont.render("You cannot enter game if opponent is ready as Thief", 1, black)
         if not self.ready:
             text = font.render('Ready', True,black, green)
         elif self.ready and self.cap:
             text = font.render('Cancel', True, black, red)
-            textd = myfont.render("Police is ready to go", 1, black)
+            self.textd = myfont.render("Police is ready to go", 1, black)
         elif self.ready and self.thief:
             text = font.render('Cancel', True, black, red)
-            textd = myfont.render("Thief is ready to go", 1, black)
+            self.textd = myfont.render("Thief is ready to go", 1, black)
         readyB = text.get_rect()
-        readyB.center = (500,500)#(resolution_width / 2, resolution_height * 6 / 7)
+        readyB.center = (resolution_width / 2, resolution_height * 6 / 7)
         capB = textcap.get_rect()
         capB.center = (resolution_width / 4, resolution_height/10)
         thiefB = textthe.get_rect()
@@ -61,7 +65,8 @@ class lobby:
             self.thiefB_bottom = thiefB.bottom
             self.thiefB_top = thiefB.top
             self.init=True
-        win.blit(textd, (resolution_width / 8, resolution_height / 2))
+        win.blit(self.textd, (resolution_width / 3, resolution_height / 2))
+        win.blit(textinfo, (resolution_width / 7, resolution_height *4/6 ))
         win.blit(text, readyB)
         win.blit(textcap,capB)
         win.blit(textthe,thiefB)

@@ -4,7 +4,7 @@ import PlayerStatic
 import MapObj.map as Map
 import Status
 import socket
-
+import time
 import pickle
 
 print("Server is started, waitting for hearing from clients:")
@@ -30,11 +30,14 @@ def make_pos(player):
 def threaded_client(conn,player):
     #First of first, we need to send initial position to current player
     #conn.sendall(str.encdoe("Player"+str(player)+"is connected"))
-
+    recordTime = True
+    gamelength = 3
     caught = False
+    start = False
+    ends = False
     temp = {}
     while not caught:
-        try:
+        #try:
             data = pickle.loads(conn.recv(2048))
             if type(data)==type(player_thief):
                 # The server need to respond opposite player's opposite player's position
@@ -52,6 +55,7 @@ def threaded_client(conn,player):
                     for ele in data.split("&"):
                         (k,v) = ele.split("=")
                         temp[k]=v
+                        print(v)
                     if "thief" in temp['character']:
                         role=0
                     else:
@@ -77,9 +81,16 @@ def threaded_client(conn,player):
                     start=False
                     break
             if start:
+                        conn.sendall(pickle.dumps(make_pos(0)))
+            if False not in readyPlayer:
+                start = True
+            else:
+                start = False
+            if start and (not ends):
+                print("We enter start")
                 status.setIngame()
-        except:
-            break
+        # except:
+        #     break
     player -=1
     conn.close()
     print("Disconnected")

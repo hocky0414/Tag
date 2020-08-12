@@ -4,12 +4,15 @@ from enum import Enum
 from MapObj.map import *
 import Communication.Client as com
 from Menu import Lobby
+from Gameover import Win
+from Gameover import Lose
 
 
 class Status(Enum):
     waiting = 1
     in_game = 2
-    game_over = 3
+    game_win = 3
+    game_lose = 4
 
 
 def drawWindow(win, player, map, FOV, p2x, p2y, p2c):
@@ -40,6 +43,8 @@ def main():
     status = comm.status()
     player=None
     waiting = Lobby.lobby(comm)
+    endingl = Lose.lose()
+    endingw = Win.win()
     font = pygame.font.Font('freesansbold.ttf', 70)
 
     while (run):
@@ -72,5 +77,21 @@ def main():
             player.move()
             drawWindow(win, player, player.map, initFov, player2.x, player2.y, player2.color)
             counter += 1
+        elif status.value == Status.game_win.value:
+            print("This is in win")
+            print(status.value)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    pygame.quit()
+            drawMenu(win,endingw, font)
+        elif status.value == Status.game_lose.value:
+            print("This is in lose")
+            print(status.value)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    pygame.quit()
+            drawMenu(win,endingl, font)
         status = comm.status()
 main()

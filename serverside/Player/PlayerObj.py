@@ -30,7 +30,8 @@ class PlayerObj(interface.playerInterface):
                 ret = False
                 break
         return ret
-
+    def getPosition(self):
+        return [self.x,self.y]
     def __parseObs(self):
         self.objH = self.obsInfo["height"]
         self.objW = self.obsInfo["width"]
