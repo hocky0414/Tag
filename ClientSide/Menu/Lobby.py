@@ -46,7 +46,7 @@ class lobby:
             text = font.render('Cancel', True, black, red)
             self.textd = myfont.render("Thief is ready to go", 1, black)
         readyB = text.get_rect()
-        readyB.center = (500,500)#resolution_width / 2, resolution_height * 6 / 7)
+        readyB.center = (resolution_width / 2, resolution_height * 6 / 7)
         capB = textcap.get_rect()
         capB.center = (resolution_width / 4, resolution_height/10)
         thiefB = textthe.get_rect()

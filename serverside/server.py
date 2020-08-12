@@ -33,7 +33,7 @@ def make_pos(player):
 
 def threaded_client(conn):
     recordTime = True
-    gamelength = 10
+    gamelength = 120
     caught = False
     role = -1
     startTime = time.time()
@@ -132,8 +132,8 @@ readyPlayer = [False, False]
 playerInfo = {}
 initialList(playerInfo)
 map = Map.Map(1000, 1000)
-player_thief = player.PlayerObj(10, 10, PlayerStatic.getWid(), PlayerStatic.getHeight(), (255, 0, 0), map.block(), map)
-player_police = player.PlayerObj(500, 500, PlayerStatic.getWid(), PlayerStatic.getHeight(), (0, 255, 0), map.block(),
+player_thief = player.PlayerObj( playerInfo['thief']['posX'],  playerInfo['thief']['posY'], PlayerStatic.getWid(), PlayerStatic.getHeight(), (255, 0, 0), map.block(), map)
+player_police = player.PlayerObj( playerInfo['cap']['posX'],  playerInfo['cap']['posY'], PlayerStatic.getWid(), PlayerStatic.getHeight(), (0, 255, 0), map.block(),
                                  map)
 players = [player_thief, player_police]
 while True:
