@@ -46,7 +46,7 @@ class lobby:
             text = font.render('Cancel', True, black, red)
             self.textd = myfont.render("Thief is ready to go", 1, black)
         readyB = text.get_rect()
-        readyB.center = (resolution_width / 2, resolution_height * 6 / 7)
+        readyB.center = (500,500)#resolution_width / 2, resolution_height * 6 / 7)
         capB = textcap.get_rect()
         capB.center = (resolution_width / 4, resolution_height/10)
         thiefB = textthe.get_rect()
@@ -77,7 +77,6 @@ class lobby:
             if (x >= self.readyB_left and x <= self.readyB_right and y >= self.readyB_top and y <= self.readyB_bottom):
                 if (not self.ready):
                     if (self.thief or self.cap):
-
                         data=self.com.sendMenu(self.cap,self.thief,True)
                         print (data)
                         if "taken" not in data:

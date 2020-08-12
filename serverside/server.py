@@ -31,6 +31,7 @@ def threaded_client(conn,player):
     recordTime = True
     gamelength = 3
     caught = False
+    startTime = time.time()
     start = False
     ends = False
     temp = {}
@@ -73,45 +74,37 @@ def threaded_client(conn,player):
                     elif 'cap' in temp['character']:
                        # print(make_pos(0))
                         conn.sendall(pickle.dumps(make_pos(0)))
-            if False not in readyPlayer:
-                start = True
-            else:
-                start = False
-            # for i in readyPlayer:
-            #     if not i:
-            #         start=False
-            #         break
-            if start and (not ends):
-                print("We enter start")
-                status.setIngame()
-            print(klklkl)
-            # if start and recordTime:
-            #     print("We enter this if condition")
-            #     startTime = time.time()
-            #     print("===========================")
-            #     recordTime = False
-            # currentTime = time.time()
-            # policePos = players[1].getPosition()
-            # thiefPos = players[0].getPosition()
-            # if (currentTime - startTime )< gamelength and not ends:
-            #     if (abs(policePos[0]-thiefPos[0])<PlayerStatic.getWid())and (abs(policePos[1]-thiefPos[1])<PlayerStatic.getHeight()):
-            #         ends = True
-            #         if player == 0:
-            #             print("Thief lose")
-            #             print(player)
-            #             status.setLose()
-            #         elif player == 1:
-            #             print("Police win")
-            #             print(player)
-            #             status.setWin()
-            #         #caught = True
-            # elif (currentTime - startTime )>= gamelength and not ends:
-            #     ends = True
-            #     if player == 0:
-            #         status.setWin()
-            #     elif player==1:
-            #         status.setLose()
 
+            if False in readyPlayer:
+                start = False
+            else:
+                start = True
+            if start and (not ends):
+                status.setIngame()
+                if recordTime:
+                    startTime = time.time()#record start time
+                    recordTime = False
+            currentTime = time.time()
+            policePos = players[1].getPosition()
+            thiefPos = players[0].getPosition()
+            if (currentTime-startTime)<gamelength and start and not ends:
+                if(abs(policePos[0]-thiefPos[0])<PlayerStatic.getWid())and(abs(policePos[1]-thiefPos[1])<PlayerStatic.getHeight()):
+                    ends = True
+                    if player == 0:
+                        status.setLose()
+                    if player == 1:
+                        status.setWin()
+            elif (currentTime-startTime)>gamelength and start and not ends:
+                print("Out of time")
+                ends = True
+                if player == 0:
+                    print(player)
+                    print("Thief wins")
+                    status.setWin()
+                if player == 1:
+                    print(player)
+                    print("Police lose")
+                    status.setLose()
         # except:
         #     break
     player -=1
@@ -132,7 +125,6 @@ initialList(playerInfo)
 map = Map.Map(1000, 1000)
 player_thief= player.PlayerObj(int(playerInfo['thief']['posX']), (playerInfo['thief']['posY']), PlayerStatic.getWid(), PlayerStatic.getHeight(), (255, 0, 0), map.block(), map)
 player_police= player.PlayerObj(int(playerInfo['cap']['posX']),(playerInfo['cap']['posY']),PlayerStatic.getWid(),PlayerStatic.getHeight(),(0,255,0),map.block(),map)
-klklkl = True
 players=[player_thief,player_police]
 
 while True:
