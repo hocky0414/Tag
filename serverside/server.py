@@ -21,13 +21,13 @@ def initialList(list):
 
 def make_pos(player):
     #the position need to send to opposite player
+
     if player == 0:
        return players[0]
     elif player == 1:
         return players[1]
+
 def threaded_client(conn,player):
-    #First of first, we need to send initial position to current player
-    #conn.sendall(str.encdoe("Player"+str(player)+"is connected"))
     recordTime = True
     gamelength = 3
     caught = False
@@ -56,9 +56,9 @@ def threaded_client(conn,player):
                         temp[k]=v
                         print(v)
                     if "thief" in temp['character']:
-                        role=1
-                    else:
                         role=0
+                    else:
+                        role=1
                     if "True" in temp['ready'] and not readyPlayer[role] :
                         readyPlayer[role]=True
                         conn.sendall(pickle.dumps("ok"))
@@ -70,9 +70,16 @@ def threaded_client(conn,player):
                 elif "init" in data:
                     if "thief" in temp['character']:
                         #print(make_pos(1))
-                        conn.sendall(pickle.dumps(make_pos(1)))
+                        conn.sendall(pickle.dumps(make_pos(0)))
                     elif 'cap' in temp['character']:
                        # print(make_pos(0))
+                        conn.sendall(pickle.dumps(make_pos(1)))
+            start=True
+            for i in readyPlayer:
+                if not i:
+                    start=False
+                    break
+            if start:
                         conn.sendall(pickle.dumps(make_pos(0)))
 
             if False in readyPlayer:
