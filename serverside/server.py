@@ -53,9 +53,9 @@ def threaded_client(conn,player):
                         (k,v) = ele.split("=")
                         temp[k]=v
                     if "thief" in temp['character']:
-                        role=1
-                    else:
                         role=0
+                    else:
+                        role=1
                     if "True" in temp['ready'] and not readyPlayer[role] :
                         readyPlayer[role]=True
                         conn.sendall(pickle.dumps("ok"))
@@ -67,10 +67,10 @@ def threaded_client(conn,player):
                 elif "init" in data:
                     if "thief" in temp['character']:
                         #print(make_pos(1))
-                        conn.sendall(pickle.dumps(make_pos(1)))
+                        conn.sendall(pickle.dumps(make_pos(0)))
                     elif 'cap' in temp['character']:
                        # print(make_pos(0))
-                        conn.sendall(pickle.dumps(make_pos(0)))
+                        conn.sendall(pickle.dumps(make_pos(1)))
             start=True
             for i in readyPlayer:
                 if not i:
