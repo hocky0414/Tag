@@ -29,12 +29,13 @@ def make_pos(player):
 
 def threaded_client(conn,player):
     recordTime = True
-    gamelength = 3
+    gamelength = 60
     caught = False
     startTime = time.time()
     start = False
     ends = False
     temp = {}
+    status = Status.gameStatus()
     while not caught:
         #try:
             data = pickle.loads(conn.recv(2048))
@@ -49,6 +50,7 @@ def threaded_client(conn,player):
                 conn.sendall(pickle.dumps(oppositePos))
             elif type(data)==type(""):
                 if "status" in data:
+                    print(data)
                     conn.sendall(pickle.dumps(status.getStates()))
                 elif "&" in data:
                     for ele in data.split("&"):
@@ -74,14 +76,6 @@ def threaded_client(conn,player):
                     elif 'cap' in temp['character']:
                        # print(make_pos(0))
                         conn.sendall(pickle.dumps(make_pos(1)))
-            start=True
-            for i in readyPlayer:
-                if not i:
-                    start=False
-                    break
-            if start:
-                        conn.sendall(pickle.dumps(make_pos(0)))
-
             if False in readyPlayer:
                 start = False
             else:
@@ -95,13 +89,13 @@ def threaded_client(conn,player):
             policePos = players[1].getPosition()
             thiefPos = players[0].getPosition()
             if (currentTime-startTime)<gamelength and start and not ends:
-                if(abs(policePos[0]-thiefPos[0])<PlayerStatic.getWid())and(abs(policePos[1]-thiefPos[1])<PlayerStatic.getHeight()):
+                if(abs(policePos[0]-thiefPos[0])<PlayerStatic.getWid())and(abs(policePos[1]-thiefPos[1])<PlayerStatic.getHeight()): #caught
                     ends = True
                     if player == 0:
                         status.setLose()
                     if player == 1:
                         status.setWin()
-            elif (currentTime-startTime)>gamelength and start and not ends:
+            elif (currentTime-startTime)>=gamelength and start and not ends:
                 print("Out of time")
                 ends = True
                 if player == 0:
@@ -125,7 +119,7 @@ serversocket.bind((host,port))
 serversocket.listen(2)
 maxPlayer=2
 currentPlayer = 0
-status= Status.gameStatus()
+
 readyPlayer= [False,False]
 playerInfo = {}
 initialList(playerInfo)
