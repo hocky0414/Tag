@@ -8,8 +8,9 @@ This project is a two men tag game which works under localhost/LAN
   * This is our first project in COMP3010
   * Project Member: Tianlei Wang and Chenbo Ma
 
-  
+
 # How to run the project:
-  * First, run the server under serverSdie(commandline: python3 server.py).
+  * First, run the server under serverSdie
+    >python3 server.py
   * Next run main and stubmain under clientside on the same machine(commandline: python3 main.py).
   * Play around with it
